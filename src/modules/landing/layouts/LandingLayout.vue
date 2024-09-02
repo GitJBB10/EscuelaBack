@@ -7,11 +7,10 @@
             <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="40" height="40" />
           </a>
         </div>
-        <div><p>Escuela Particular Despertar Ecuatoriano </p></div>
+        <div><p class="nombreEscuela"> Escuela Particular Despertar Ecuatoriano </p></div>
         <nav class="ml-auto space-x-4 flex items-center h-10 sm:space-x-6">
-          <RouterLink to="/"> Login </RouterLink>
-          <RouterLink to="/features"> Features </RouterLink>
-          <RouterLink to="/contact"> Contact </RouterLink>
+          <p class="mr-4 nombreUsuario"> Bienvenido {{ userName }}</p>
+          <RouterLink @click="logout"  to="/"> Logout </RouterLink>
         </nav>
       </header>
       <!-- Fin Header -->
@@ -45,6 +44,24 @@
   <script lang="ts" setup>
   import SideBar from '@/modules/SideBar.vue'
   //import { Mail } from 'lucide-vue-next';
+  import { useRouter } from 'vue-router';
+
+  // Obtener el nombre del usuario desde el localStorage
+  const userName = localStorage.getItem('userName') || 'Usuario';
+
+  const router = useRouter();
+
+  const logout = () => {
+  // Eliminar el token de autenticación del almacenamiento local
+  localStorage.removeItem('token');
+
+  // Eliminar cualquier otra información del usuario
+  localStorage.removeItem('user');
+  localStorage.removeItem('permissions');
+
+  // Redirigir al usuario a la página de inicio de sesión
+  router.push('/login');
+  };
   </script>
   
   <style scoped>
@@ -54,5 +71,14 @@
     justify-content: center;
     align-items: center;
   }
+
+  .nombreUsuario{
+    color: cadetblue;
+  }
+
+  .nombreEscuela{
+    font-weight: 900;
+  }
+
   </style>
   

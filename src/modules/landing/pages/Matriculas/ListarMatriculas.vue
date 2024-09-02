@@ -80,7 +80,9 @@ import axios from '@/plugins/axios';
 
 interface Matricula {
   id: number;
+  periodo_id:number;
   periodo: string;
+  estudiante_id:number;
   estudiante: string;
   curso_id: number;
   curso: string;
@@ -123,15 +125,40 @@ export default defineComponent({
       showModal.value = true;
     };
 
+    const obtenerPeriodoId = (periodo: string) => {
+      const periodoEncontrado = periodosLectivos.value.find(p => p === periodo);
+      return periodoEncontrado ? periodoEncontrado.id : null;
+    };
+
+    const obtenerCursoId = (curso: string) => {
+      const cursoEncontrado = matriculas.value.find(m => m.curso === curso);
+      return cursoEncontrado ? cursoEncontrado.curso_id : null;
+    };
+
+
+    const obtenerEstudianteId = (estudiante: string) => {
+      const estudianteEncontrado = matriculas.value.find(m => m.estudiante === estudiante);
+      return estudianteEncontrado ? estudianteEncontrado.estudiante_id : null;
+    };
+
     const saveMatricula = async () => {
       if (selectedMatricula.value) {
         try {
-          await axios.put(`/matricula/${selectedMatricula.value.id}`, selectedMatricula.value);
+          const payload = {
+            id: selectedMatricula.value.id,
+            periodo_id: selectedMatricula.value.periodo_id || obtenerPeriodoId(selectedMatricula.value.periodo),
+            estudiante_id: selectedMatricula.value.estudiante_id || obtenerEstudianteId(selectedMatricula.value.estudiante), 
+            curso_id: selectedMatricula.value.curso_id,
+            estado: selectedMatricula.value.estado,
+          };
+          
+          //console.log('Payload:', payload);
+          
+          await axios.put(`/matricula/${selectedMatricula.value.id}`, payload);
           fetchMatriculas();
           closeModal();
           alert('Matrícula actualizada exitosamente.');
         } catch (error) {
-          console.error('Error actualizando matrícula:', error);
           alert('Error actualizando matrícula.');
         }
       }

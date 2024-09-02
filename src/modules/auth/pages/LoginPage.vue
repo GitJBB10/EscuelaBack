@@ -54,6 +54,9 @@ const login = async () => {
 
     // Guardar el token en el almacenamiento local (localStorage)
     localStorage.setItem('token', response.data.token);
+    localStorage.setItem('permissions', JSON.stringify(response.data.user.permissions));
+    localStorage.setItem('roles', JSON.stringify(response.data.user.roles));
+    localStorage.setItem('userName', response.data.user.name); // Guardar nombre del usuario
 
     // Redirigir al usuario a la página principal u otra página protegida
     router.push('/');
