@@ -4,29 +4,29 @@
     <form @submit.prevent="registerRepresentante">
       <div class="form-row">
         <div class="form-group col">
-          <label for="identificacion">Identificación</label>
+          <label for="identificacion">Identificación <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.identificacion" required class="form-control" />
         </div>
         <div class="form-group col">
-          <label for="parentesco">Parentesco</label>
+          <label for="parentesco">Parentesco <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.parentesco" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="nombres">Nombres</label>
+          <label for="nombres">Nombres <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.nombres" required class="form-control" />
         </div>
         <div class="form-group col">
-          <label for="apellidos">Apellidos</label>
+          <label for="apellidos">Apellidos <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.apellidos" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="genero">Género</label>
+          <label for="genero">Género <span class="obligtorio_label">(*)</span></label>
           <select v-model="form.genero" required class="form-control">
             <option value="M">Masculino</option>
             <option value="F">Femenino</option>
@@ -34,25 +34,25 @@
         </div>
 
         <div class="form-group col">
-          <label for="f_nacimiento">Fecha de Nacimiento</label>
+          <label for="f_nacimiento">Fecha de Nacimiento <span class="obligtorio_label">(*)</span></label>
           <input type="date" v-model="form.f_nacimiento" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="mail">Correo</label>
+          <label for="mail">Correo <span class="obligtorio_label">(*)</span></label>
           <input type="email" v-model="form.mail" required class="form-control" />
         </div>
         <div class="form-group col">
-          <label for="telefono">Teléfono</label>
+          <label for="telefono">Teléfono <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.telefono" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="direccion">Dirección</label>
+          <label for="direccion">Dirección <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.direccion" required class="form-control" />
         </div>
       </div>
@@ -119,6 +119,11 @@ h1{
   margin-bottom: 20px;
   color: cadetblue;
   font-weight: bold;
+}
+
+.obligtorio_label {
+  color: red;
+  margin-left: 5px;
 }
 
 .form-row {

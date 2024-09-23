@@ -19,8 +19,12 @@ import ListarProfesores from "@/modules/landing/pages/Profesores/ListarProfesore
 import AsignarPermisos from "@/modules/auth/pages/Roles/AsignarPermisos.vue";
 import ListarRoles from "@/modules/auth/pages/Roles/ListarRoles.vue";
 import AsignarRoles from "@/modules/auth/pages/Roles/AsignarRoles.vue";
+import RegistrarClases from "@/modules/landing/pages/Clases/RegistrarClases.vue";
+import ListarClases from "@/modules/landing/pages/Clases/ListarClases.vue";
 
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
+
+
 
 export const router = createRouter({
     history: createWebHistory( import.meta.env.BASE_URL),
@@ -53,6 +57,10 @@ export const router = createRouter({
             // Materias
             { path: '/materias/registrar',name: 'RegistrarMaterias',component: RegistrarMaterias },
             { path: '/materias/listar',name: 'ListarMaterias',component: ListarMaterias },
+
+            // Clases
+            { path: '/clases/registrar',name: 'RegistrarClases',component: RegistrarClases },
+            { path: '/clases/listar',name: 'ListarClases',component: ListarClases },
 
             // Periodos
             { path: '/periodos/registrar',name: 'RegistrarPeriodos',component: RegistrarPeriodos },

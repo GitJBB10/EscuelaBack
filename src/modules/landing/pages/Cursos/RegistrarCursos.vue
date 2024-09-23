@@ -4,14 +4,16 @@
     <form @submit.prevent="registerCurso">
       <div class="form-row">
         <div class="form-group col">
-          <label for="name">Curso</label>
+          <div >
+              <label for="name">Curso <span class="obligtorio_label">(*)</span></label>
+          </div>
           <input type="text" v-model="form.nombre_curso" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="descripcion">Descripción</label>
+          <label for="descripcion">Descripción <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.descripcion" required class="form-control" />
         </div>
       </div>
@@ -73,6 +75,10 @@ h1 {
   margin-bottom: 20px;
   color: cadetblue;
   font-weight: bold;
+}
+
+.obligtorio_label {
+  color: red;
 }
 
 .form-row {

@@ -190,6 +190,25 @@ const items: TreeItemType[] = [
        },
     ],
   },
+  {
+    id: 'clases',
+    title: 'Clases',
+    iconClosed: 'mdi:book-open-outline',
+    iconOpen: 'mdi:book-open-outline',
+    requiredPermission: ['read_materia'],
+    children: [
+      { 
+        id: 'clases-listar', title: 'Listar', icon: 'mdi:account-search',
+        routerLink: '/clases/listar',
+        requiredPermission: ['read_materia']
+      },
+      { 
+        id: 'clases-registrar', title: 'Registrar', icon: 'mdi:account-plus',
+        routerLink: '/clases/registrar',
+        requiredPermission: ['create_materia']
+       },
+    ],
+  },
   { 
     id: 'periodo-lectivo', 
     title: 'Peridos Lectivos', 

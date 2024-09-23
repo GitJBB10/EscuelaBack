@@ -4,7 +4,7 @@
     <form @submit.prevent="registerPeriodo">
       <div class="form-row">
         <div class="form-group col">
-          <label for="materia">Periodo</label>
+          <label for="materia">Periodo <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.periodo" required class="form-control" />
         </div>
       </div>
@@ -12,12 +12,12 @@
       <div class="form-row">
 
         <div class="form-group col">
-          <label for="fecha_inicio">Fecha de Inicio</label>
+          <label for="fecha_inicio">Fecha de Inicio <span class="obligtorio_label">(*)</span></label>
           <input type="date" v-model="form.fecha_inicio" required class="form-control" />
         </div>
 
         <div class="form-group col">
-          <label for="fecha_fin">Fecha de Fin</label>
+          <label for="fecha_fin">Fecha de Fin <span class="obligtorio_label">(*)</span></label>
           <input type="date" v-model="form.fecha_fin" required class="form-control" />
         </div>
 
@@ -26,7 +26,7 @@
       <div class="form-row">
 
         <div class="form-group col">
-          <label for="genero">Estado</label>
+          <label for="genero">Estado <span class="obligtorio_label">(*)</span></label>
           <select v-model="form.estado" required class="form-control">
             <option value="Vigente">Vigente</option>
             <option value="Cerrado">Cerrado</option>
@@ -98,6 +98,11 @@ h1 {
   margin-bottom: 20px;
   color: cadetblue;
   font-weight: bold;
+}
+
+.obligtorio_label {
+  color: red;
+  margin-left: 5px;
 }
 
 .form-row {

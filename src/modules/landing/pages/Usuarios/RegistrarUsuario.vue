@@ -4,21 +4,21 @@
     <form @submit.prevent="registerUsuario">
       <div class="form-row">
         <div class="form-group col">
-          <label for="name">Usuario</label>
+          <label for="name">Usuario <span class="obligtorio_label">(*)</span></label>
           <input type="text" v-model="form.name" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="email">Email</label>
+          <label for="email">Email <span class="obligtorio_label">(*)</span></label>
           <input type="email" v-model="form.email" required class="form-control" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="password">Password</label>
+          <label for="password">Password <span class="obligtorio_label">(*)</span></label>
           <input type="password" v-model="form.password" required class="form-control" />
           <small v-if="passwordError" class="text-danger">{{ passwordError }}</small>
         </div>
@@ -26,7 +26,7 @@
 
       <div class="form-row">
         <div class="form-group col">
-          <label for="confirmPassword">Confirmar Password</label>
+          <label for="confirmPassword">Confirmar Password <span class="obligtorio_label">(*)</span></label>
           <input type="password" v-model="form.confirmPassword" required class="form-control" />
           <small v-if="confirmPasswordError" class="text-danger">{{ confirmPasswordError }}</small>
         </div>
@@ -115,6 +115,11 @@ h1 {
   margin-bottom: 20px;
   color: cadetblue;
   font-weight: bold;
+}
+
+.obligtorio_label {
+  color: red;
+  margin-left: 5px;
 }
 
 .form-row {

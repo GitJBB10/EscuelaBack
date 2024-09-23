@@ -1,17 +1,8 @@
 <template>
   <div class="container">
-    <h1>Registrar Matricula</h1>
-    <form @submit.prevent="registerMatricula">
+    <h1>Registrar Clase</h1>
+    <form @submit.prevent="registerClase">
       <div class="form-row">
-        <!-- Select para periodos lectivos -->
-        <div class="form-group col">
-          <label for="periodo_id">Periodo Lectivo <span class="obligtorio_label">(*)</span></label>
-          <select v-model="form.periodo_id" required class="form-control">
-            <option v-for="periodo in periodosLectivos" :key="periodo.id" :value="periodo.id">
-              {{ periodo.periodo }}
-            </option>
-          </select>
-        </div>
         <!-- Select para cursos -->
         <div class="form-group col">
           <label for="curso_id">Curso <span class="obligtorio_label">(*)</span></label>
@@ -21,26 +12,53 @@
             </option>
           </select>
         </div>
+        <!-- Select para materias -->
         <div class="form-group col">
-          <label for="estado">Estado <span class="obligtorio_label">(*)</span></label>
-          <select v-model="form.estado" required class="form-control">
-            <option value="Ingresada">Ingresada</option>
-            <option value="Aprobada">Aprobada</option>
+          <label for="materia_id">Materia <span class="obligtorio_label">(*)</span></label>
+          <select v-model="form.materia_id" required class="form-control">
+            <option v-for="materia in materias" :key="materia.id" :value="materia.id">
+              {{ materia.nombre_materia }}
+            </option>
           </select>
         </div>
       </div>
 
       <div class="form-row">
-        <!-- Select para estudiantes -->
+        <!-- Hora de inicio -->
+        <div class="form-group col">
+          <label for="hora_inicio">Hora de Inicio <span class="obligtorio_label">(*)</span></label>
+          <input
+            type="time"
+            v-model="form.hora_inicio"
+            required
+            class="form-control"
+            placeholder="Seleccione la hora de inicio"
+          />
+        </div>
+        <!-- Hora de fin -->
+        <div class="form-group col">
+          <label for="hora_fin">Hora de Fin <span class="obligtorio_label">(*)</span></label>
+          <input
+            type="time"
+            v-model="form.hora_fin"
+            required
+            class="form-control"
+            placeholder="Seleccione la hora de fin"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Select para profesores -->
       <div class="form-group col">
-        <label for="estudiante">Estudiante <span class="obligtorio_label">(*)</span></label>
+        <label for="profesor">Profesor <span class="obligtorio_label">(*)</span></label>
         <input
           type="text"
-          v-model="selectedEstudianteNameDisplay"
+          v-model="selectedProfesorNameDisplay"
           @focus="showModal = true"
           readonly
           class="form-control"
-          placeholder="Seleccione un estudiante"
+          placeholder="Seleccione un profesor"
         />
       </div>
 
@@ -49,36 +67,6 @@
         </div>
 
       </div>
-
-
-      <!-- Datos del Estudiante -->
-      <div v-if="selectedEstudiante">
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="genero">Género</label>
-            <input type="text" :value="selectedEstudiante.genero" readonly class="form-control" />
-          </div>
-          <div class="form-group col">
-            <label for="f_nacimiento">Fecha de Nacimiento</label>
-            <input type="text" :value="selectedEstudiante.f_nacimiento" readonly class="form-control" />
-          </div>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="representante">Representante</label>
-            <input type="text" :value="selectedEstudiante.representante" readonly class="form-control" />
-          </div>
-        </div>
-
-      <div class="form-row">
-          <div class="form-group col">
-            <label for="direccion">Dirección</label>
-            <input type="text" :value="selectedEstudiante.direccion" readonly class="form-control" />
-          </div>
-        </div>
-      </div>
-
 
       <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
@@ -94,22 +82,19 @@
 <script lang="ts">
 import { defineComponent, reactive, ref,computed, onMounted } from 'vue';
 import axios from '@/plugins/axios';
-import EstudianteModal from '@/modules/landing/pages/Matriculas/EstudianteModal.vue';
+import EstudianteModal from '@/modules/landing/pages/Clases/ProfesorModal.vue';
 
-interface PeriodoLectivo {
-  id: number;
-  periodo: string;
-  estado: string;
-  fecha_inicio: string;
-  fecha_fin: string;
-}
 
 interface Curso {
   id: number;
   nombre_curso: string;
 }
 
-interface Estudiante {
+interface Materia{
+  id: number;
+  nombre_materia: string;
+}
+interface Profesor {
   id: number;
   nombres: string;
   apellidos: string;
@@ -117,7 +102,6 @@ interface Estudiante {
   genero:string;
   f_nacimiento:string;
   direccion:string;
-  representante:string;
 }
 
 export default defineComponent({
@@ -126,29 +110,27 @@ export default defineComponent({
     EstudianteModal,
   },
   setup() {
-    const periodosLectivos = ref<PeriodoLectivo[]>([]);
+    const materias = ref<Materia[]>([]);
     const cursos = ref<Curso[]>([]);
     const showModal = ref(false);
-    const selectedEstudiante  = ref<Estudiante | null>(null);
+    const selectedProfesor  = ref<Profesor | null>(null);
 
     const form = reactive({
-      periodo_id: null as number | null,
-      estudiante_id: null as number | null,
       curso_id: null as number | null,
-      estado: '',
+      materia_id: null as number | null,
+      profesor_id: null as number | null,
+      hora_inicio: '',
+      hora_fin: '',
       created_at: '',
       updated_at: '',
-      representante_id: null as number | null,
     });
 
-    const fetchPeriodosLectivos = async () => {
+    const fetchMaterias = async () => {
       try {
-        const response = await axios.get('/periodo');
-        periodosLectivos.value = response.data.filter(
-          (periodo: PeriodoLectivo) => periodo.estado === 'Vigente'
-        );
+        const response = await axios.get('/materia');
+        materias.value = response.data;
       } catch (error) {
-        console.error('Error fetching periodos lectivos:', error);
+        console.error('Error fetching materias', error);
       }
     };
 
@@ -161,29 +143,29 @@ export default defineComponent({
       }
     };
 
-    const selectEstudiante = (estudiante: Estudiante) => {
-      form.estudiante_id = estudiante.id;
-      selectedEstudiante.value = estudiante;
+    const selectEstudiante = (profesor: Profesor) => {
+      form.profesor_id = profesor.id;
+      selectedProfesor.value = profesor;
       showModal.value = false;
     };
 
-    const selectedEstudianteNameDisplay = computed(() => {
-      if (selectedEstudiante.value) {
-        return `${selectedEstudiante.value.nombres} ${selectedEstudiante.value.apellidos}`;
+    const selectedProfesorNameDisplay = computed(() => {
+      if (selectedProfesor.value) {
+        return `${selectedProfesor.value.nombres} ${selectedProfesor.value.apellidos}`;
       }
       return '';
     });
 
-    const registerMatricula = async () => {
+    const registerClase = async () => {
       
       try {
-        await axios.post('/matricula', form);
-        alert('Matricula registrada exitosamente.');
+        await axios.post('/clase', form);
+        alert('Clase registrada exitosamente.');
         // Reset form
         Object.keys(form).forEach((key) => {
           (form as any)[key] = '';
         });
-        selectedEstudiante.value = null;
+        selectedProfesor.value = null;
       } catch (error) {
         console.error('Error registrando matrícula:', error);
         alert('Error registrando matrícula.');
@@ -191,19 +173,19 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      fetchPeriodosLectivos();
+      fetchMaterias();
       fetchCursos();
     });
 
     return {
       form,
-      periodosLectivos,
+      materias,
       cursos,
       showModal,
-      selectedEstudianteNameDisplay,
-      selectedEstudiante,
+      selectedProfesorNameDisplay,
+      selectedProfesor,
       selectEstudiante,
-      registerMatricula,
+      registerClase,
     };
   },
 });
