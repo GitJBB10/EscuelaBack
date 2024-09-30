@@ -2,6 +2,17 @@
   <div class="container">
     <h1>Registrar Estudiante</h1>
     <form @submit.prevent="registerEstudiante">
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="identificacion">Identifición <span class="obligtorio_label">(*)</span></label>
+          <input type="text" v-model="form.identificacion" required class="form-control" />
+        </div>
+        <div class="form-group col">
+          <label for="representante"></label>
+        </div>
+      </div>
+
       <div class="form-row">
         <div class="form-group col">
           <label for="nombres">Nombres <span class="obligtorio_label">(*)</span></label>
@@ -92,6 +103,7 @@ export default defineComponent({
   },
   setup() {
     const form = reactive({
+      identificacion: '',
       nombres: '',
       apellidos: '',
       mail: '',

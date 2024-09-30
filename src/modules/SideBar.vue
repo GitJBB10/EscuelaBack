@@ -174,8 +174,8 @@ const items: TreeItemType[] = [
   {
     id: 'materias',
     title: 'Materias',
-    iconClosed: 'mdi:book-open-outline',
-    iconOpen: 'mdi:book-open-outline',
+    iconClosed: 'solar:book-linear',
+    iconOpen: 'solar:book-bold-duotone',
     requiredPermission: ['read_materia'],
     children: [
       { 
@@ -193,8 +193,8 @@ const items: TreeItemType[] = [
   {
     id: 'clases',
     title: 'Clases',
-    iconClosed: 'mdi:book-open-outline',
-    iconOpen: 'mdi:book-open-outline',
+    iconClosed: 'ph:clipboard-text-light',
+    iconOpen: 'ph:clipboard-text-bold',
     requiredPermission: ['read_materia'],
     children: [
       { 
@@ -212,7 +212,8 @@ const items: TreeItemType[] = [
   { 
     id: 'periodo-lectivo', 
     title: 'Peridos Lectivos', 
-    icon: 'mdi:calendar-month-outline', 
+    iconClosed: 'mdi:calendar-month-outline', 
+    iconOpen: 'mdi:calendar-month-outline', 
     routerLink: '/periodos/registrar',
     requiredPermission: ['manager_periodos'], 
   },

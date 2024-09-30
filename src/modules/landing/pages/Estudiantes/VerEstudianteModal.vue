@@ -3,7 +3,7 @@
     <div class="modal">
       <h2>Datos del Estudiante</h2>
       <div class="details">
-        <div><strong>ID:</strong> {{ estudiante.id }}</div>
+        <div><strong>identificación:</strong> {{ estudiante.identificacion }}</div>
         <div><strong>Nombres:</strong> {{ estudiante.nombres }}</div>
         <div><strong>Apellidos:</strong> {{ estudiante.apellidos }}</div>
         <div><strong>Correo:</strong> {{ estudiante.mail }}</div>
@@ -27,6 +27,7 @@ import axios from '../../../../plugins/axios';
 
 interface Estudiante {
   id: number;
+  identificacion: string;
   nombres: string;
   apellidos: string;
   mail: string;
